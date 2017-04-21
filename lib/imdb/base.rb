@@ -140,7 +140,7 @@ module Imdb
       if @title && !force_refresh
         @title
       else
-        @title = document.at('h1[itemprop=name]').inner_html.split('<span').first.strip.imdb_unescape_html rescue nil
+        @title = document.search('h1')[1].inner_html.split('<span').first.strip.imdb_unescape_html rescue nil
       end
     end
 
@@ -169,8 +169,9 @@ module Imdb
       end rescue []
     end
 
-    private
 
+    private
+    
     # Returns a new Nokogiri document for parsing.
     def document
       @document ||= Nokogiri::HTML(Imdb::Movie.find_by_id(@id))
